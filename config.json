@@ -1,0 +1,9 @@
+{
+    "app_name": "PakGinjal",
+    "db_host": "127.0.0.1",
+    "db_port": "3306",
+    "db_name": "pak_ginjal",
+    "db_user": "root",
+    "db_pass": "",
+    "serve_port": "8000"
+}
