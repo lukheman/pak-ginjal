@@ -1,0 +1,56 @@
+name: Build Release ZIP
+
+# Workflow ini otomatis berjalan setiap kali ada tag baru
+# dengan format v* (contoh: v1.0.0, v1.2.3) yang di-push ke GitHub.
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Ambil source code dari repo sesuai tag yang di-push
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Siapkan PHP (sesuaikan versi dengan MIN_PHP_VERSION di installer.php)
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      # 3. Install dependency production saja (tanpa dev dependency seperti PHPUnit dll)
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --prefer-dist
+
+      # 4. Ambil nama repo & nama tag untuk penamaan file ZIP
+      - name: Set variables
+        id: vars
+        run: |
+          echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> "$GITHUB_OUTPUT"
+          echo "TAG_NAME=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      # 5. Buat ZIP dari seluruh project, kecualikan file/folder yang tidak perlu
+      - name: Create ZIP archive
+        run: |
+          zip -r "${{ steps.vars.outputs.REPO_NAME }}-${{ steps.vars.outputs.TAG_NAME }}.zip" . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x ".gitignore" \
+            -x ".env.example" \
+            -x "tests/*" \
+            -x "*.log"
+
+      # 6. Upload ZIP tersebut sebagai asset ke GitHub Release
+      #    Release otomatis dibuat jika belum ada untuk tag ini.
+      - name: Create Release and Upload ZIP
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: false
+          files: ${{ steps.vars.outputs.REPO_NAME }}-${{ steps.vars.outputs.TAG_NAME }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
