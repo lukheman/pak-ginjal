@@ -75,7 +75,7 @@ if (is_dir("{$dir}/vendor")) {
     warn('Folder vendor/ sudah ada, tetap memperbarui...');
 }
 
-if (! run('composer install --no-interaction --ignore-platform-reqs')) {
+if (! run('composer install --no-interaction --ignore-platform-reqs --no-dev')) {
     err('Composer install gagal!');
     exit(1);
 }

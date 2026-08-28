@@ -36,7 +36,7 @@ class BasisPengetahuanController extends Controller
     {
         $request->validate([
             'penyakit_id' => 'required|exists:penyakit,id',
-            'gejala_id' => 'required|exists:gejalas,id',
+            'gejala_id' => 'required|exists:gejala,id',
             'mb' => 'required|numeric|min:0|max:1',
             'md' => 'required|numeric|min:0|max:1',
         ]);

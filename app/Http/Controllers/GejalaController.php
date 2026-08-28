@@ -26,7 +26,7 @@ class GejalaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|unique:gejalas',
+            'kode' => 'required|unique:gejala',
             'nama' => 'required',
         ]);
 
@@ -40,7 +40,7 @@ class GejalaController extends Controller
         $gejala = Gejala::findOrFail($id);
 
         $request->validate([
-            'kode' => 'required|unique:gejalas,kode,' . $gejala->id,
+            'kode' => 'required|unique:gejala,kode,' . $gejala->id,
             'nama' => 'required',
         ]);
 
