@@ -18,6 +18,7 @@ Route::middleware('guest')->group(function () {
 });
 
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PenggunaController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('gejala', GejalaController::class);
     Route::resource('basis_pengetahuan', BasisPengetahuanController::class);
     Route::resource('pasien', PasienController::class);
+    Route::resource('pengguna', PenggunaController::class);
 });
 
 // Global Logout Route (accessible by both Admin and Pasien)

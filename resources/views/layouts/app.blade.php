@@ -61,11 +61,18 @@
                         Aturan
                     </a>
 
-                    <a href="{{ route('pasien.index') }}" class="flex items-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('pasien.*') ? 'text-blue-700 bg-blue-50' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' }} rounded-lg group transition-colors">
+                    <a href="{{ route('pengguna.index') }}" class="flex items-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('pengguna.*') ? 'text-blue-700 bg-blue-50' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' }} rounded-lg group transition-colors">
+                        <svg class="w-5 h-5 mr-3 {{ request()->routeIs('pengguna.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Manajemen Pengguna
+                    </a>
+
+                    <a href="{{ route('pasien.index') }}" class="flex items-center px-4 py-2.5 text-sm font-medium {{ request()->routeIs('pasien.*') || request()->routeIs('admin.riwayat.*') ? 'text-blue-700 bg-blue-50' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900' }} rounded-lg group transition-colors">
                         <svg class="w-5 h-5 mr-3 {{ request()->routeIs('pasien.*') ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
-                        Pengguna (Pasien)
+                        Manajemen Pasien
                     </a>
                 @endauth
 

@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Pasien')
+@section('title', 'Manajemen Pengguna')
 
 @section('content')
 <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
-        <h1 class="text-2xl font-bold text-slate-800">Manajemen Pasien</h1>
-        <p class="text-slate-500 text-sm mt-1">Kelola data pasien yang terdaftar di sistem.</p>
+        <h1 class="text-2xl font-bold text-slate-800">Manajemen Pengguna</h1>
+        <p class="text-slate-500 text-sm mt-1">Kelola data pengguna (admin) yang terdaftar di sistem.</p>
     </div>
-    
+
     <!-- Create Modal Toggle & Component -->
     <div x-data="{ openCreate: {{ $errors->any() && !old('_method') ? 'true' : 'false' }} }">
         <button @click="openCreate = true" class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors shadow-sm text-sm">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            Tambah Pasien
+            Tambah Pengguna
         </button>
 
         <!-- Create Modal -->
@@ -23,13 +23,13 @@
                 <div x-show="openCreate" x-transition.opacity class="fixed inset-0 bg-slate-900/50 transition-opacity" @click="openCreate = false" aria-hidden="true"></div>
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                 <div x-show="openCreate" x-transition class="relative z-10 inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-                    <form action="{{ route('pasien.store') }}" method="POST">
+                    <form action="{{ route('pengguna.store') }}" method="POST">
                         @csrf
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="flex items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                    <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Tambah Pasien Baru</h3>
-                                    <p class="text-sm text-slate-500 mt-1">Isi formulir di bawah ini untuk menambahkan data pasien.</p>
+                                    <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Tambah Pengguna Baru</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Isi formulir di bawah ini untuk menambahkan data pengguna.</p>
 
                                     @if ($errors->any() && !old('_method'))
                                         <div class="mt-4 bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100 flex items-start">
@@ -46,27 +46,27 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
-                                                <input type="text" name="nama" value="{{ old('nama') }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                <input type="text" name="name" value="{{ old('name') }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                             </div>
                                             <div>
                                                 <label class="block text-sm font-medium text-slate-700 mb-1.5">Email <span class="text-red-500">*</span></label>
                                                 <input type="email" name="email" value="{{ old('email') }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                             </div>
                                         </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Lahir</label>
+                                            <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                        </div>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Tempat Lahir</label>
-                                                <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Password <span class="text-red-500">*</span></label>
+                                                <input type="password" name="password" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                <p class="text-xs text-slate-500 mt-1">Minimal 6 karakter.</p>
                                             </div>
                                             <div>
-                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Lahir</label>
-                                                <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Konfirmasi Password <span class="text-red-500">*</span></label>
+                                                <input type="password" name="password_confirmation" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                             </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Password <span class="text-red-500">*</span></label>
-                                            <input type="password" name="password" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-                                            <p class="text-xs text-slate-500 mt-1">Minimal 6 karakter.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="bg-slate-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
                             <button type="submit" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-5 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm transition-all">
-                                Simpan Pasien
+                                Simpan Pengguna
                             </button>
                             <button type="button" @click="openCreate = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-5 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-all">
                                 Batal
@@ -92,25 +92,25 @@
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
         <p class="text-sm font-medium text-slate-500">Total Pengguna</p>
-        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalAdmin ?? '-' }}</p>
+        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalAdmin }}</p>
     </div>
     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
         <p class="text-sm font-medium text-slate-500">Total Pasien</p>
-        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalPasien ?? $pasiens->count() }}</p>
+        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalPasien }}</p>
     </div>
     <div class="bg-blue-600 rounded-xl shadow-sm p-5 text-white">
         <p class="text-sm font-medium text-blue-100">Total Semua Pengguna</p>
-        <p class="text-2xl font-bold mt-1">{{ ($totalAdmin ?? 0) + ($totalPasien ?? $pasiens->count()) }}</p>
+        <p class="text-2xl font-bold mt-1">{{ $totalAdmin + $totalPasien }}</p>
     </div>
 </div>
 
 <!-- Tab navigasi Admin / Pasien -->
 <div class="mb-6 inline-flex p-1 bg-slate-100 rounded-xl">
-    <a href="{{ route('pengguna.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
-        Pengguna ({{ $totalAdmin ?? '-' }})
+    <a href="{{ route('pengguna.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold bg-white text-blue-700 shadow-sm">
+        Pengguna ({{ $totalAdmin }})
     </a>
-    <a href="{{ route('pasien.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold bg-white text-blue-700 shadow-sm">
-        Pasien ({{ $totalPasien ?? $pasiens->count() }})
+    <a href="{{ route('pasien.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
+        Pasien ({{ $totalPasien }})
     </a>
 </div>
 
@@ -121,28 +121,32 @@
                 <tr class="bg-slate-50 text-slate-500 border-b border-slate-200 text-sm font-medium uppercase tracking-wider">
                     <th class="px-6 py-4">Nama</th>
                     <th class="px-6 py-4">Email</th>
-                    <th class="px-6 py-4">Tempat, Tgl Lahir</th>
+                    <th class="px-6 py-4">Tanggal Lahir</th>
+                    <th class="px-6 py-4">Status</th>
                     <th class="px-6 py-4 text-right">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-200">
-                @forelse ($pasiens as $pasien)
-                <tr x-data="{ openEdit: {{ old('_method') == 'PUT' && old('id') == $pasien->id ? 'true' : 'false' }}, openDelete: false }" class="hover:bg-slate-50 transition-colors">
+                @forelse ($penggunas as $pengguna)
+                <tr x-data="{ openEdit: {{ old('_method') == 'PUT' && old('id') == $pengguna->id ? 'true' : 'false' }}, openDelete: false }" class="hover:bg-slate-50 transition-colors">
                     <td class="px-6 py-4 text-sm font-medium text-slate-900">
-                        {{ $pasien->nama }}
+                        {{ $pengguna->name }}
                     </td>
                     <td class="px-6 py-4 text-sm text-slate-600">
-                        {{ $pasien->email }}
+                        {{ $pengguna->email }}
                     </td>
                     <td class="px-6 py-4 text-sm text-slate-600">
-                        {{ $pasien->tempat_lahir ?: '-' }}, 
-                        {{ $pasien->tanggal_lahir ? \Carbon\Carbon::parse($pasien->tanggal_lahir)->format('d M Y') : '-' }}
+                        {{ $pengguna->tanggal_lahir ? \Carbon\Carbon::parse($pengguna->tanggal_lahir)->format('d M Y') : '-' }}
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        @if (auth()->id() === $pengguna->id)
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Anda</span>
+                        @else
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">Pengguna</span>
+                        @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div class="flex justify-end gap-2">
-                            <a href="{{ route('admin.riwayat.index', $pasien->id) }}" class="inline-flex items-center px-4 py-2 bg-emerald-100 text-emerald-700 hover:bg-emerald-200 rounded-lg text-sm font-semibold transition-colors focus:outline-none">
-                                Riwayat
-                            </a>
                             <button @click="openEdit = true" class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-lg text-sm font-semibold transition-colors focus:outline-none">
                                 Edit
                             </button>
@@ -154,18 +158,18 @@
                                     <div x-show="openEdit" x-transition.opacity class="fixed inset-0 bg-slate-900/50 transition-opacity" @click="openEdit = false" aria-hidden="true"></div>
                                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
                                     <div x-show="openEdit" x-transition class="relative z-10 inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
-                                        <form action="{{ route('pasien.update', $pasien->id) }}" method="POST">
+                                        <form action="{{ route('pengguna.update', $pengguna->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <input type="hidden" name="id" value="{{ $pasien->id }}">
-                                            
+                                            <input type="hidden" name="id" value="{{ $pengguna->id }}">
+
                                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                                 <div class="flex items-start">
                                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                                        <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Edit Pasien: {{ $pasien->nama }}</h3>
-                                                        <p class="text-sm text-slate-500 mt-1">Perbarui data informasi pasien.</p>
+                                                        <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Edit Pengguna: {{ $pengguna->name }}</h3>
+                                                        <p class="text-sm text-slate-500 mt-1">Perbarui data pengguna.</p>
 
-                                                        @if ($errors->any() && old('_method') == 'PUT' && old('id') == $pasien->id)
+                                                        @if ($errors->any() && old('_method') == 'PUT' && old('id') == $pengguna->id)
                                                             <div class="mt-4 bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100 flex items-start">
                                                                 <svg class="w-5 h-5 mr-3 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                                 <ul class="list-disc list-inside">
@@ -180,35 +184,35 @@
                                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                 <div>
                                                                     <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
-                                                                    <input type="text" name="nama" value="{{ old('nama', $pasien->nama) }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                                    <input type="text" name="name" value="{{ old('name', $pengguna->name) }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                                                 </div>
                                                                 <div>
                                                                     <label class="block text-sm font-medium text-slate-700 mb-1.5">Email <span class="text-red-500">*</span></label>
-                                                                    <input type="email" name="email" value="{{ old('email', $pasien->email) }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-                                                                </div>
-                                                            </div>
-                                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                                <div>
-                                                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Tempat Lahir</label>
-                                                                    <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $pasien->tempat_lahir) }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-                                                                </div>
-                                                                <div>
-                                                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Lahir</label>
-                                                                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $pasien->tanggal_lahir) }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                                    <input type="email" name="email" value="{{ old('email', $pengguna->email) }}" required class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Password (Opsional)</label>
-                                                                <input type="password" name="password" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
-                                                                <p class="text-xs text-slate-500 mt-1">Kosongkan jika tidak ingin mengubah password.</p>
+                                                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Lahir</label>
+                                                                <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $pengguna->tanggal_lahir) }}" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
                                                             </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                                <div>
+                                                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Password Baru (Opsional)</label>
+                                                                    <input type="password" name="password" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                                </div>
+                                                                <div>
+                                                                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Konfirmasi Password Baru</label>
+                                                                    <input type="password" name="password_confirmation" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all">
+                                                                </div>
+                                                            </div>
+                                                            <p class="text-xs text-slate-500">Kosongkan password jika tidak ingin mengubahnya.</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="bg-slate-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
                                                 <button type="submit" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-5 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm transition-all">
-                                                    Perbarui Pasien
+                                                    Perbarui Pengguna
                                                 </button>
                                                 <button type="button" @click="openEdit = false" class="mt-3 w-full inline-flex justify-center rounded-xl border border-slate-300 shadow-sm px-5 py-2 bg-white text-base font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-all">
                                                     Batal
@@ -220,6 +224,7 @@
                             </div>
                             </template>
 
+                            @if (auth()->id() !== $pengguna->id)
                             <button @click="openDelete = true" class="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 hover:bg-red-200 rounded-lg text-sm font-semibold transition-colors focus:outline-none">
                                 Hapus
                             </button>
@@ -239,15 +244,15 @@
                                                     </svg>
                                                 </div>
                                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                    <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Hapus Pasien</h3>
+                                                    <h3 class="text-lg leading-6 font-bold text-slate-900" id="modal-title">Hapus Pengguna</h3>
                                                     <div class="mt-2">
-                                                        <p class="text-sm text-slate-500">Apakah Anda yakin ingin menghapus pasien <strong>{{ $pasien->nama }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
+                                                        <p class="text-sm text-slate-500">Apakah Anda yakin ingin menghapus pengguna <strong>{{ $pengguna->name }}</strong>? Tindakan ini tidak dapat dibatalkan.</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="bg-slate-50 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse border-t border-slate-100">
-                                            <form action="{{ route('pasien.destroy', $pasien->id) }}" method="POST" class="w-full sm:w-auto">
+                                            <form action="{{ route('pengguna.destroy', $pengguna->id) }}" method="POST" class="w-full sm:w-auto">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-5 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm transition-all">
@@ -262,15 +267,16 @@
                                 </div>
                             </div>
                             </template>
+                            @endif
                         </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="px-6 py-10 text-center text-slate-500">
+                    <td colspan="5" class="px-6 py-10 text-center text-slate-500">
                         <div class="flex flex-col items-center justify-center">
                             <svg class="w-12 h-12 text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                            <p>Belum ada data pasien.</p>
+                            <p>Belum ada data pengguna.</p>
                         </div>
                     </td>
                 </tr>
