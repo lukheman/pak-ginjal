@@ -93,6 +93,12 @@ class PenggunaController extends Controller
 
         $pengguna->update($data);
 
+        // Segarkan user yang di-cache di guard bila admin mengubah akunnya sendiri,
+        // agar nama di navbar langsung mengikuti data terbaru
+        if (auth()->id() === $pengguna->id) {
+            auth()->setUser($pengguna->fresh());
+        }
+
         return redirect()->route('pengguna.index')->with('success', 'Data Pengguna berhasil diperbarui.');
     }
 

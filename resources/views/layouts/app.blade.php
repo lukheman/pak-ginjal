@@ -104,19 +104,19 @@
 
                 <div class="flex-1 flex justify-end">
                     <div class="flex items-center gap-4">
+                        @php
+                            $navbarPasien = auth('pasien')->user();
+                            $navbarAdmin = auth('web')->user();
+                        @endphp
                         <span class="text-sm font-medium text-slate-700 hidden sm:block">
-                            @if(auth('pasien')->check())
-                                Pasien: {{ auth('pasien')->user()->nama }}
+                            @if($navbarPasien)
+                                Pasien: {{ $navbarPasien->nama }}
                             @else
-                                Admin: {{ Auth::user()->name ?? 'Administrator' }}
+                                Admin: {{ $navbarAdmin->name ?? 'Administrator' }}
                             @endif
                         </span>
                         <div class="w-9 h-9 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-700 font-bold">
-                            @if(auth('pasien')->check())
-                                {{ substr(auth('pasien')->user()->nama, 0, 1) }}
-                            @else
-                                {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
-                            @endif
+                            {{ strtoupper(substr($navbarPasien->nama ?? $navbarAdmin->name ?? 'A', 0, 1)) }}
                         </div>
                     </div>
                 </div>
