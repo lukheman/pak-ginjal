@@ -47,12 +47,25 @@ class PenggunaTest extends TestCase
         $this->assertDatabaseHas('admin', ['id' => $admin->id]);
     }
 
-    public function test_pasien_index_punya_tab(): void
+    public function test_pasien_index_fokus_pasien(): void
     {
         $admin = Admin::first();
         $response = $this->actingAs($admin)->get('/pasien');
         $response->assertStatus(200);
         $response->assertSee('Manajemen Pasien');
-        $response->assertSee('Total Semua Pengguna');
+        $response->assertSee('Tambah Pasien');
+        $response->assertDontSee('Total Pengguna');
+        $response->assertDontSee('Total Semua Pengguna');
+    }
+
+    public function test_pengguna_index_fokus_pengguna(): void
+    {
+        $admin = Admin::first();
+        $response = $this->actingAs($admin)->get('/pengguna');
+        $response->assertStatus(200);
+        $response->assertSee('Manajemen Pengguna');
+        $response->assertSee('Tambah Pengguna');
+        $response->assertDontSee('Total Pasien');
+        $response->assertDontSee('Total Semua Pengguna');
     }
 }

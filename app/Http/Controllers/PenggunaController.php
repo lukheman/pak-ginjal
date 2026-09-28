@@ -15,9 +15,7 @@ class PenggunaController extends Controller
     public function index()
     {
         $penggunas = Admin::latest()->get();
-        $totalAdmin = Admin::count();
-        $totalPasien = \App\Models\Pasien::count();
-        return view('pengguna.index', compact('penggunas', 'totalAdmin', 'totalPasien'));
+        return view('pengguna.index', compact('penggunas'));
     }
 
     /**

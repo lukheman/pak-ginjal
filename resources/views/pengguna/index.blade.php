@@ -88,32 +88,6 @@
     </div>
 </div>
 
-<!-- Ringkasan semua pengguna -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-        <p class="text-sm font-medium text-slate-500">Total Pengguna</p>
-        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalAdmin }}</p>
-    </div>
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-        <p class="text-sm font-medium text-slate-500">Total Pasien</p>
-        <p class="text-2xl font-bold text-slate-800 mt-1">{{ $totalPasien }}</p>
-    </div>
-    <div class="bg-blue-600 rounded-xl shadow-sm p-5 text-white">
-        <p class="text-sm font-medium text-blue-100">Total Semua Pengguna</p>
-        <p class="text-2xl font-bold mt-1">{{ $totalAdmin + $totalPasien }}</p>
-    </div>
-</div>
-
-<!-- Tab navigasi Admin / Pasien -->
-<div class="mb-6 inline-flex p-1 bg-slate-100 rounded-xl">
-    <a href="{{ route('pengguna.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold bg-white text-blue-700 shadow-sm">
-        Pengguna ({{ $totalAdmin }})
-    </a>
-    <a href="{{ route('pasien.index') }}" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
-        Pasien ({{ $totalPasien }})
-    </a>
-</div>
-
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">

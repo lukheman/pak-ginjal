@@ -14,9 +14,7 @@ class PasienController extends Controller
     public function index()
     {
         $pasiens = Pasien::latest()->get();
-        $totalPasien = $pasiens->count();
-        $totalAdmin = \App\Models\Admin::count();
-        return view('pasien.index', compact('pasiens', 'totalPasien', 'totalAdmin'));
+        return view('pasien.index', compact('pasiens'));
     }
 
     /**
